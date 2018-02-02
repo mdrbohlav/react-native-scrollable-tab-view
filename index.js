@@ -438,12 +438,12 @@ const ScrollableTabView = createReactClass({
     return (
       <View style={[styles.container, this.props.style, ]} onLayout={this._handleLayout}>
         {!this.props.hideTabBar &&
-          blurViewProps.viewRef &&
+          (!this.props.tabBarBlurred || !!blurViewProps.viewRef) &&
           this.props.tabBarPosition === 'top' &&
           this.renderTabBar(tabBarProps)}
         {this.renderScrollableContent()}
         {!this.props.hideTabBar &&
-          blurViewProps.viewRef &&
+          (!this.props.tabBarBlurred || !!blurViewProps.viewRef) &&
           (this.props.tabBarPosition === 'bottom' || overlayTabs) &&
           this.renderTabBar(tabBarProps)}
         {!this.props.hideTabBar &&
