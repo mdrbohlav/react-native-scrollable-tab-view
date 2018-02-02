@@ -60,9 +60,7 @@ const ScrollableTabView = createReactClass({
       locked: false,
       prerenderingSiblingsNumber: 0,
       tabBarBlurred: false,
-      blurViewProps: {
-        style: {},
-      },
+      blurViewProps: {},
       hideTabBar: false,
     };
   },
@@ -412,10 +410,6 @@ const ScrollableTabView = createReactClass({
       };
     }
 
-    if (this.props.blurViewProps) {
-      delete this.props.blurViewProps.style;
-    }
-
     const additionalBlurViewStyle = {
       height: this.state.tabBarHeight,
     };
@@ -428,7 +422,8 @@ const ScrollableTabView = createReactClass({
       tabBarProps.position = 'bottom';
     }
 
-    const customBlurViewStyle = { ...this.props.blurViewProps.style, };
+    const customBlurViewStyle =
+      'style' in this.props.blurViewProps ? { ...this.props.blurViewProps.style, } : {};
     const blurViewProps = { ...this.props.blurViewProps, };
     delete blurViewProps.style;
 
@@ -452,7 +447,7 @@ const ScrollableTabView = createReactClass({
           (this.props.tabBarPosition === 'bottom' || overlayTabs) &&
           this.renderTabBar(tabBarProps)}
         {!this.props.hideTabBar &&
-          blurViewProps.viewRef &&
+          !!blurViewProps.viewRef &&
           this.props.tabBarBlurred && (
             <BlurView
               style={[styles.defaultBlurViewStyle, additionalBlurViewStyle, customBlurViewStyle, ]}
